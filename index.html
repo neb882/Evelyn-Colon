@@ -6,6 +6,8 @@
 <title>Evelyn Colon — A Cold-Case Dossier</title>
 <meta name="description" content="The murder of Evelyn Colon, known for forty-four years only as “Beth Doe.” A fact-checked account, and a guide for visiting her grave at Laurytown Road Cemetery near Weatherly, Pennsylvania.">
 <meta name="theme-color" content="#FAF7F1" id="meta-theme">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg fill='none' stroke='%232E4034' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M60 66V14'/%3E%3Cpath d='M60 26C50 24 42 18 39 9'/%3E%3Cpath d='M60 26c10-2 18-8 21-17'/%3E%3Cpath d='M60 38C49 37 40 32 36 23'/%3E%3Cpath d='M60 38c11-1 20-6 24-15'/%3E%3Cpath d='M60 50c-10-1-18-5-22-13'/%3E%3Cpath d='M60 50c10-1 18-5 22-13'/%3E%3C/g%3E%3Ccircle cx='60' cy='12' r='5' fill='%232E4034'/%3E%3C/svg%3E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Evelyn Colon — A Cold-Case Dossier">
 <meta property="og:description" content="The girl who was “Beth Doe” for forty-four years — who she turned out to be, what was done to her, and the case that came undone on a question of geography.">
@@ -108,6 +110,7 @@
   :focus-visible{outline:2.5px solid var(--accent-bright);outline-offset:3px;border-radius:2px;}
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+  body.no-scroll{overflow:hidden;}
 
   /* ============================ PROGRESS + HEADER ============================ */
   .progress{position:fixed;inset:0 0 auto 0;height:3px;background:transparent;z-index:120;}
@@ -128,17 +131,21 @@
     .topbar{background:var(--paper);}
   }
   .brand{
-    display:flex;align-items:baseline;gap:.55rem;min-width:0;
+    display:flex;align-items:baseline;gap:.6rem;min-width:0;flex:1 1 auto;overflow:hidden;
     opacity:0;transform:translateY(-4px);transition:opacity .35s ease, transform .35s ease;
     pointer-events:none;
   }
   body.scrolled .brand{opacity:1;transform:none;pointer-events:auto;}
-  .brand b{font-family:var(--serif);font-weight:600;font-size:1.02rem;white-space:nowrap;}
+  .brand b{
+    font-family:var(--serif);font-weight:600;font-size:1.02rem;white-space:nowrap;flex:0 0 auto;
+    padding-right:.6rem;border-right:1px solid var(--rule);
+  }
   .brand span{
     font-family:var(--sans);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--muted);white-space:nowrap;
+    color:var(--muted);white-space:nowrap;flex:0 1 auto;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;transition:opacity .2s ease;
   }
-  @media (max-width:560px){ .brand span{display:none;} }
+  @media (max-width:380px){ .brand b{border-right:none;padding-right:0;} .brand span{display:none;} }
   .bar-actions{display:flex;align-items:center;gap:.4rem;flex:0 0 auto;}
   .btn{
     font-family:var(--sans);font-size:.74rem;font-weight:500;letter-spacing:.04em;
@@ -234,6 +241,22 @@
   }
   .readtime svg{width:14px;height:14px;}
 
+  /* hero entrance — a slow, reverent assembly on load */
+  @media (prefers-reduced-motion: no-preference){
+    html.js .cover > *{opacity:0;animation:riseIn 1.05s cubic-bezier(.2,.65,.25,1) forwards;}
+    html.js .cover .eyebrow{animation-delay:.15s;}
+    html.js .cover .cover-rule{opacity:0;transform-origin:center;animation:lineDraw .9s cubic-bezier(.2,.65,.25,1) .34s forwards;}
+    html.js .cover .sprig{animation-delay:.52s;}
+    html.js .cover h1{animation-delay:.68s;}
+    html.js .cover .subtitle{animation-delay:.98s;}
+    html.js .cover .dek{animation-delay:1.24s;}
+    html.js .cover .cover-foot{animation-delay:1.54s;}
+    html.js .hero::after{opacity:0;animation:fadeCue 1s ease 2s forwards;}
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  @keyframes lineDraw{from{opacity:0;transform:scaleX(0);}to{opacity:.5;transform:scaleX(1);}}
+  @keyframes fadeCue{from{opacity:0;}to{opacity:1;}}
+
   /* ============================ STANDFIRST + GLANCE ============================ */
   .standfirst{
     font-style:italic;font-size:clamp(1.18rem,3.2vw,1.42rem);line-height:1.58;color:var(--ink-soft);
@@ -318,6 +341,15 @@
     .tl-item .date{text-align:left;padding-left:1.3rem;}
     .tl-item .body{padding-top:.1rem;}
     .tl-item .body::before{top:-1.25rem;}
+  }
+  /* the case is still open — the final marker is left hollow and the line trails off */
+  .tl-item.tl-open .body{border-left:1.5px dashed var(--rule);}
+  .tl-item.tl-open .body::before{
+    background:var(--paper);border:2px solid var(--accent);width:11px;height:11px;left:-6.5px;top:.4rem;
+  }
+  .tl-item.tl-open .body::after{
+    content:"";position:absolute;left:-0.75px;top:1.85rem;height:1.5rem;
+    border-left:1.5px dashed var(--rule);opacity:.6;
   }
 
   /* ============================ VISIT PANEL ============================ */
@@ -445,7 +477,7 @@
 <div class="progress" aria-hidden="true"><i id="bar"></i></div>
 
 <header class="topbar">
-  <div class="brand"><b>Evelyn Colon</b><span>Beth Doe · 1976</span></div>
+  <div class="brand"><b>Evelyn Colon</b><span id="nowSection">Beth Doe · 1976</span></div>
   <div class="bar-actions">
     <button class="btn" id="openContents" aria-haspopup="true" aria-expanded="false" aria-controls="drawer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -611,7 +643,7 @@
           <div class="tl-item"><div class="date">Mar 31, 2021</div><div class="body"><div class="ev"><b>Identified at last</b> as Evelyn Colon; Luis Sierra is charged with homicide.</div></div></div>
           <div class="tl-item"><div class="date">2022</div><div class="body"><div class="ev"><b>Sierra is released on $250,000 bail</b> following the <em>Commonwealth v. Talley</em> ruling.</div></div></div>
           <div class="tl-item"><div class="date">2024–2025</div><div class="body"><div class="ev"><b>Charges dismissed</b> on jurisdictional grounds; the case is referred to New Jersey.</div></div></div>
-          <div class="tl-item"><div class="date">2026</div><div class="body"><div class="ev"><b>No charges refiled</b> in New Jersey as of the latest reporting; the case remains open.</div></div></div>
+          <div class="tl-item tl-open"><div class="date">2026</div><div class="body"><div class="ev"><b>No charges refiled</b> in New Jersey as of the latest reporting; the case remains open.</div></div></div>
         </div>
       </section>
 
@@ -753,10 +785,15 @@
   function openDrawer(){
     drawer.classList.add('open'); backdrop.classList.add('open');
     drawer.setAttribute('aria-hidden','false'); openBtn.setAttribute('aria-expanded','true');
+    body.classList.add('no-scroll');
+    closeBtn.focus();
   }
   function closeDrawer(){
+    if(!drawer.classList.contains('open')) return;
     drawer.classList.remove('open'); backdrop.classList.remove('open');
     drawer.setAttribute('aria-hidden','true'); openBtn.setAttribute('aria-expanded','false');
+    body.classList.remove('no-scroll');
+    openBtn.focus();
   }
   openBtn.addEventListener('click', openDrawer);
   closeBtn.addEventListener('click', closeDrawer);
@@ -766,18 +803,29 @@
     a.addEventListener('click', closeDrawer);
   });
 
-  /* ---------- Scroll-spy ---------- */
-  var tocLinks = {}, spyTargets = [];
+  /* ---------- Scroll-spy + live section label in the header ---------- */
+  var tocLinks = {}, spyTargets = [], secTitles = {};
   Array.prototype.forEach.call(doc.querySelectorAll('#toc a'), function(a){
     var id = a.getAttribute('href').slice(1);
     tocLinks[id] = a; var t = doc.getElementById(id); if(t) spyTargets.push(t);
+    var nEl = a.querySelector('.n'); var clone = a.cloneNode(true);
+    if(nEl){ var c = clone.querySelector('.n'); if(c) c.remove(); }
+    secTitles[id] = (clone.textContent || '').trim();
   });
+  var nowSection = doc.getElementById('nowSection'), curId = null;
+  function setSection(id){
+    if(id === curId) return; curId = id;
+    var title = secTitles[id]; if(!title) return;
+    nowSection.style.opacity = '0';
+    setTimeout(function(){ nowSection.textContent = title; nowSection.style.opacity = '1'; }, 180);
+  }
   if ('IntersectionObserver' in window) {
     var spy = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(en.isIntersecting){
           Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
           var link = tocLinks[en.target.id]; if(link) link.classList.add('active');
+          setSection(en.target.id);
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
